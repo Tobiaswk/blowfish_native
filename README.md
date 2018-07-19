@@ -1,10 +1,11 @@
 # blowfish_native
 
-A new flutter plugin project.
+A flutter plugin for native Blowfish encryption on Android and iOS.
 
-## Getting Started
+## Usage
 
-For help getting started with Flutter, view our online
-[documentation](https://flutter.io/).
+A simple usage example:
 
-For help on editing plugin code, view the [documentation](https://flutter.io/platform-plugins/#edit-code).
+    import 'package:blowfish_native/blowfish_native.dart';
+
+    BlowfishNative.encrypt(encryptKey, _session.password);
