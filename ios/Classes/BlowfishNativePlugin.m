@@ -13,7 +13,7 @@
 - (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
     NSDictionary *arguments = [call arguments];
     if ([@"encrypt" isEqualToString:call.method]) {
-        result([self doBlowfish:arguments['password'] context:kCCEncrypt key:arguments['key'] options:kCCOptionPKCS7Padding | kCCOptionECBMode iv:nil error:nil]);
+        result([self doBlowfish:arguments[@"password"] context:kCCEncrypt key:arguments[@"key"] options:kCCOptionPKCS7Padding | kCCOptionECBMode iv:nil error:nil]);
     } else {
         result(FlutterMethodNotImplemented);
     }
