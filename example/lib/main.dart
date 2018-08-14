@@ -43,8 +43,7 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Plugin example app'),
         ),
         body: new Center(
-          child: new Text('Running on: $_encryptedPassword
-      \n'),
+          child: new Text('Running on: ${_encryptedPassword}\n'),
         ),
       ),
     );
