@@ -16,10 +16,9 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    encryptPassword();
   }
 
-  Future<void> encryptPassword() async {
+  Future<void> _encryptPassword() async {
     String encryptedPassword;
     encryptedPassword = await BlowfishNative.encrypt('key', 'Hello World!');
 
@@ -42,8 +41,10 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Plugin example app'),
         ),
         body: new Center(
-          child: new Text('Running on: ${_encryptedPassword}\n'),
-        ),
+            child: new RaisedButton(
+          onPressed: _encryptPassword,
+          child: new Text('Encrypted password: $_encryptedPassword'),
+        )),
       ),
     );
   }
