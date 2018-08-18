@@ -12,22 +12,20 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String _platformVersion = 'Unknown';
+  String _encryptedPassword = '';
 
   @override
   void initState() {
     super.initState();
-    initPlatformState();
+    initPasswordEncryption();
   }
 
-  // Platform messages are asynchronous, so we initialize in an async method.
-  Future<void> initPlatformState() async {
-    String platformVersion;
-    // Platform messages may fail, so we use a try/catch PlatformException.
+  Future<void> initPasswordEncryption() async {
+    String encryptedPassword;
     try {
-      platformVersion = await BlowfishNative.platformVersion;
+      encryptedPassword = await BlowfishNative.encrypt('key', 'password');
     } on PlatformException {
-      platformVersion = 'Failed to get platform version.';
+      encryptedPassword = 'Failed to encrypt password.';
     }
 
     // If the widget was removed from the tree while the asynchronous platform
@@ -36,7 +34,7 @@ class _MyAppState extends State<MyApp> {
     if (!mounted) return;
 
     setState(() {
-      _platformVersion = platformVersion;
+      _encryptedPassword = encryptedPassword;
     });
   }
 
@@ -48,7 +46,7 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Plugin example app'),
         ),
         body: new Center(
-          child: new Text('Running on: $_platformVersion\n'),
+          child: new Text('Encrypted password: $_encryptedPassword\n'),
         ),
       ),
     );

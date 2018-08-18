@@ -1,5 +1,5 @@
 name: blowfish_native
-description: A new flutter plugin project.
+description: A plugin for doing native Blowfish encryption on Android and iOS.
 version: 0.0.1
 author:
 homepage:

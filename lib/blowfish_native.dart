@@ -7,7 +7,7 @@ class BlowfishNative {
       const MethodChannel('blowfish_native');
 
   static Future<String> encrypt(String key, String password) async {
-    final String version = await _channel.invokeMethod('encrypt', [key, password]);
-    return version;
+    final String encryptedPassword = await _channel.invokeMethod('encrypt', [key, password]);
+    return encryptedPassword;
   }
 }
