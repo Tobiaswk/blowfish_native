@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-import 'package:flutter/services.dart';
 import 'package:blowfish_native/blowfish_native.dart';
 
 void main() => runApp(new MyApp());
@@ -12,21 +11,16 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String _encryptedPassword = '';
+  String _encryptedPassword = 'Waiting for encryption';
 
   @override
   void initState() {
     super.initState();
-    initPasswordEncryption();
   }
 
-  Future<void> initPasswordEncryption() async {
+  Future<void> _encryptPassword() async {
     String encryptedPassword;
-    try {
-      encryptedPassword = await BlowfishNative.encrypt('key', 'password');
-    } on PlatformException {
-      encryptedPassword = 'Failed to encrypt password.';
-    }
+    encryptedPassword = await BlowfishNative.encrypt('key', 'Hello World!');
 
     // If the widget was removed from the tree while the asynchronous platform
     // message was in flight, we want to discard the reply rather than calling
@@ -34,7 +28,8 @@ class _MyAppState extends State<MyApp> {
     if (!mounted) return;
 
     setState(() {
-      _encryptedPassword = encryptedPassword;
+      _encryptedPassword
+   = encryptedPassword;
     });
   }
 
@@ -46,8 +41,10 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Plugin example app'),
         ),
         body: new Center(
-          child: new Text('Encrypted password: $_encryptedPassword\n'),
-        ),
+            child: new RaisedButton(
+          onPressed: _encryptPassword,
+          child: new Text('Encrypted password: $_encryptedPassword'),
+        )),
       ),
     );
   }

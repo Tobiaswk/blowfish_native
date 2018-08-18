@@ -11,11 +11,13 @@
 }
 
 - (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
-  if ([@"getPlatformVersion" isEqualToString:call.method]) {
-    result([@"iOS " stringByAppendingString:[[UIDevice currentDevice] systemVersion]]);
-  } else {
-    result(FlutterMethodNotImplemented);
-  }
+    NSArray *arguments = [call arguments];
+    if ([@"encrypt" isEqualToString:call.method]) {
+        NSData *encrypted = [self doBlowfish:arguments[1] context:kCCEncrypt key:arguments[0] options:kCCOptionPKCS7Padding | kCCOptionECBMode iv:nil error:nil];
+        result([encrypted base64EncodedStringWithOptions:0]);
+    } else {
+        result(FlutterMethodNotImplemented);
+    }
 }
 //https://stackoverflow.com/questions/30860101/how-to-implement-blowfish-ecb-algorithm-pkcs5-padding-in-ios
 - (NSData *)doBlowfish:(NSData *)dataIn
