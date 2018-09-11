@@ -11,9 +11,12 @@
 }
 
 - (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
-    NSArray *arguments = [call arguments];
     if ([@"encrypt" isEqualToString:call.method]) {
-        NSData *encrypted = [self doBlowfish:arguments[1] context:kCCEncrypt key:arguments[0] options:kCCOptionPKCS7Padding | kCCOptionECBMode iv:nil error:nil];
+	    NSError *error;
+    	NSArray *arguments = [call arguments];
+	    NSData *key = [arguments[0] dataUsingEncoding:NSUTF8StringEncoding];
+	    NSData *password = [arguments[1] dataUsingEncoding:NSUTF8StringEncoding];
+        NSData *encrypted = [self doBlowfish:password context:kCCEncrypt key:key options:kCCOptionPKCS7Padding | kCCOptionECBMode iv:nil error:&error];
         result([encrypted base64EncodedStringWithOptions:0]);
     } else {
         result(FlutterMethodNotImplemented);
@@ -54,7 +57,6 @@
         }
         dataOut = nil;
     }
-
     return dataOut;
 }
 
