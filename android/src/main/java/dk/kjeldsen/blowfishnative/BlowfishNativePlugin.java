@@ -36,7 +36,7 @@ public class BlowfishNativePlugin implements MethodCallHandler {
   private String encrypt(String key, String password) throws Exception {
     byte[] KeyData = key.getBytes();
     SecretKeySpec KS = new SecretKeySpec(KeyData, "Blowfish");
-    Cipher cipher = Cipher.getInstance("Blowfish");
+    Cipher cipher = Cipher.getInstance("Blowfish/ECB/PKCS5Padding");
     cipher.init(Cipher.ENCRYPT_MODE, KS);
     return Base64.encodeToString(cipher.doFinal(password.getBytes()), Base64.NO_CLOSE);
   }
